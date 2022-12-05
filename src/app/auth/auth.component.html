@@ -1,0 +1,48 @@
+<div class="container-fluid">
+  <div class="row img">
+    <div class="col img">
+      <img src="https://news.rice.edu/sites/g/files/bxs2656/files/2022-01/quad.jpg">
+    </div>
+    <div class="col mx-5 px-5 py-5 bg-light login">
+      <a href="https://tc78-ricebookserver-final.herokuapp.com/auth/google">Sign in with Google</a>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div *ngIf="loginFailed"
+             class="alert alert-danger">
+          Bad username or password
+        </div>
+        <div class="form-outline mb-4">
+          <label for="user-name">User Name: </label>
+          <input id="user-name" type="text" class="form-control form-control-lg" required formControlName="userName">
+          <div *ngIf="userName.invalid && (userName.dirty || userName.touched)"
+               class="alert alert-danger">
+            <div *ngIf="userName.errors?.['required']">
+              Name is required.
+            </div>
+          </div>
+        </div>
+        <label for="password">Password: </label>
+        <input id="password" type="password" class="form-control form-control-lg" required formControlName="password">
+        <div *ngIf="password.invalid && (password.dirty || password.touched)"
+             class="alert alert-danger">
+          <div *ngIf="password.errors?.['required']">
+            Password is required.
+          </div>
+        </div>
+
+        <div class="text-center text-lg-start mt-4 pt-2">
+          <button type="submit" class="btn btn-primary btn-lg" [disabled]="!loginForm.valid">Login</button>
+        </div>
+      </form>
+
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col-md-7 col-lg-6 col-xl-5 mx-4 mb-3 px-3 pt-5  register">
+      <app-registration></app-registration>
+    </div>
+  </div>
+
+
+</div>
+

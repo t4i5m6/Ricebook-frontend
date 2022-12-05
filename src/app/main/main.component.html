@@ -1,0 +1,83 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-5 col-lg-4 col-xl-3">
+      <div class="profile my-2 rounded-5">
+        <div>
+          <a class="mx-2" [routerLink]="['/profile']">Profile</a>
+          <a class="mx-2" (click)="authServ.logout()" >Logout</a>
+        </div>
+        <img class="rounded-3 border mt-2 mx-3 bg-light" src="{{this.avatar}}" >
+        <h3 class="px-5">
+          {{name}}
+        </h3>
+        <p class="lead">
+          {{headLine}}
+        </p>
+        <div class="row ms-2 me-2 my-3">
+          <div class="col-md-10 col-lg-8 col-xl-8 my-3">
+            <input class="form-control" [(ngModel)]="headLineInput" #ctrl="ngModel">
+          </div>
+          <div class="col px-1 my-3">
+            <button class="btn btn-md" (click)="onClickHeadline()">Update</button>
+          </div>
+        </div>
+      </div>
+      <div class="followers rounded-5">
+        <br>
+        <div class="follower mt-2 mx-5 rounded-3"  *ngFor="let follower of followers">
+          <img class="rounded-3 border mt-2 mx-3" src="{{follower.imgSrc}}" >
+          <h5 class="name">{{follower.name}}</h5>
+          <p class="headline">{{follower.headLine}}</p>
+          <button class="btn btn-sm mb-2" (click)="onClickDelete(follower.name)" >Remove</button>
+        </div>
+        <div class="row ms-2 me-2 my-3">
+          <div *ngIf="addFollowerErrorMessage"
+               class="alert alert-danger">
+           {{addFollowerErrorMessage}}
+          </div>
+          <div class="col-md-10 col-lg-8 col-xl-9 my-3">
+            <input class="form-control" [(ngModel)]="followerInput" #ctrl="ngModel">
+          </div>
+          <div class="col px-1 my-3">
+            <button class="btn btn-md" (click)="onClickAdd()">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+
+      <div class="row newPost mx-2 my-3 w-75 rounded-2">
+        <div>
+          <textarea class="my-2 w-100" rows="4" [(ngModel)] = "textArea"></textarea>
+        </div>
+        <div class="col my-3">
+          <input type="file" (change)="onFileSelected($event)" class="form-control" >
+        </div>
+        <div class="col px-1 my-3">
+          <button class="btn btn-md" (click)="onClickTextArea()">Post</button>
+        </div>
+        <div class="col px-1 my-3">
+          <button class="btn btn-md" (click)="clearTextArea()">Cancel</button>
+        </div>
+      </div>
+      <div class="input-group w-75 p-2 rounded-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" >Author</span>
+        </div>
+        <input class="form-control" [(ngModel)] = "authorInput"  type="text">
+        <div class="input-group-prepend">
+          <span class="input-group-text" >Text</span>
+        </div>
+        <input class="form-control" [(ngModel)] = "textInput" type="text">
+        <div class="input-group-btn">
+          <button class="btn btn-md" (click)="this.postServ.search(authorInput, textInput)"><i class="bi bi-search"></i></button>
+        </div>
+      </div>
+      <app-posts ></app-posts>
+    </div>
+  </div>
+</div>
+
+
+
+

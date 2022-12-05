@@ -1,0 +1,46 @@
+<mat-card class="my-3 rounded-1" *ngFor="let post of this.postServ.pagedList">
+  <div class="post pt-2 rounded-3 m-2">
+    <div class="title rounded-2 px-1 mx-5">
+      <mat-card-title class="text-start">
+        <h5>
+          {{post.author}}
+        </h5>
+      </mat-card-title>
+      <mat-card-subtitle class="text-start">
+        <p >
+          {{post.timestamp | date: "medium"}}
+        </p>
+      </mat-card-subtitle>
+    </div>
+
+    <div class="bg-white rounded-3">
+      <img class="mt-2 mx-auto rounded-2"*ngIf="post.imgSrc" mat-card-image src="{{post.imgSrc}}">
+      <mat-card-content *ngIf="!post.editing" class="bg-white rounded-3 p-2 mx-5 my-2">{{post.text}}</mat-card-content>
+      <div *ngIf="post.editing">
+        <textarea class="my-2 w-100" rows="4" [(ngModel)] = "post.textArea"></textarea>
+      </div>
+      <div *ngIf="!post.editing" class="row ">
+        <div *ngIf="post.author == name" class="col my-1">
+          <button class="btn btn-md" (click)="edit(post)">Edit</button>
+        </div>
+        <div class="col my-1">
+          <button class="btn btn-md" (click)="onClickComment(post)" >Comment</button>
+        </div>
+      </div>
+      <div *ngIf="post.editing"class="row ">
+        <div class="col my-1">
+          <button class="btn btn-md" (click)="confirmEdit(post)">Confirm</button>
+        </div>
+        <div class="col my-1">
+          <button class="btn btn-md" (click)="cancelEdit(post)" >Cancel</button>
+        </div>
+      </div>
+      <app-comments [post]="post" *ngIf="post.showComment"></app-comments>
+    </div>
+  </div>
+</mat-card>
+<mat-paginator [length]="this.postServ.length"
+               [pageSize]="this.postServ.pageSize"
+               (page)="this.postServ.OnPageChange($event)">
+</mat-paginator>
+

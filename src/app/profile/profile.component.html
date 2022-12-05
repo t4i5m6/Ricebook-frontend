@@ -1,0 +1,97 @@
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-6 col-lg-5 col-xl-4">
+      <div class="profile my-3 rounded-5 py-2">
+        <div>
+          <a class="mx-4" [routerLink]="['/']">Main</a>
+          <a *ngIf="linkOption=='link'" class="mb-3" (click)="showProfileOrLink()" >{{linkWord}}</a>
+          <a *ngIf="linkOption=='unlink'" class="mb-3" (click)="unlink()" >Unlink</a>
+        </div>
+
+        <img class="rounded-3 border my-3 mx-3 bg-light" src="{{this.avatar}}" >
+        <div class="row">
+          <div class="col-md-2 col-lg-3 col-xl-4 text-lg-end">
+            <label for="file-input" class="btn btn-md border-0 mb-sm-1">
+              <i class="bi bi-upload text-black"></i>
+            </label>
+            <input id="file-input" type="file" (change)="onFileSelected($event)" class="form-control  d-none" >
+          </div>
+          <div class="col text-lg-start">
+            <button class="btn btn-md mb-3" (click)="uploadAvatar()" >Upload new picture</button>
+          </div>
+        </div>
+
+        <div class="info">
+          <h5>Current Info:</h5>
+          <p class="lead">{{userNameStr}}</p>
+          <p class="lead">{{emailStr}}</p>
+          <p class="lead" *ngIf="this.showDob">{{dobStr  | date}}</p>
+          <p class="lead">{{zipcodeStr}}</p>
+          <p class="lead">{{passwordStr}}</p>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!showAccountLinking" class="col">
+      <form class="w-50 p-3 rounded-3 mb-3 m-4"[formGroup]="profileForm" (ngSubmit)="onSubmit()" >
+        <div class="form-outline mb-4">
+          <div *ngIf="invalidForm"
+               class="alert alert-danger">
+            <p *ngFor="let message of validationMessage">{{message}}</p>
+          </div>
+        </div>
+
+        <div class="form-outline mb-4">
+          <label for="email">Email address: </label>
+          <input id="email" type="email" class="form-control form-control-lg" required ngModel email formControlName="email">
+        </div>
+        <div class="form-outline mb-4">
+          <label for="zip-code">Zip code: </label>
+          <input id="zip-code" type="text" class="form-control form-control-lg" required pattern='[0-9]{5}' formControlName="zipcode">
+        </div>
+        <div class="form-outline mb-4">
+          <label for="password">Password: </label>
+          <input id="password" type="password" class="form-control form-control-lg" required formControlName="password">
+          <div class="form-outline mb-4">
+            <label for="password-confirm">Password Confirm: </label>
+            <input id="password-confirm" type="password" class="form-control form-control-lg" required formControlName="passwordConfirm">
+          </div>
+        </div>
+        <div class="text-center">
+          <button type="submit" class="btn btn-lg border-0" >Update</button>
+        </div>
+      </form>
+    </div>
+    <div *ngIf="showAccountLinking" class="col-md-4 col-lg-3 mx-5 px-5 py-5 bg-light login">
+      <form [formGroup]="loginForm" (ngSubmit)="linkAccount()">
+        <div *ngIf="loginFailed"
+             class="alert alert-danger">
+          {{loginFailedStr}}
+        </div>
+        <div class="form-outline mb-4">
+          <label for="user-name">User Name: </label>
+          <input id="user-name" type="text" class="form-control form-control-lg" required formControlName="userName">
+          <div *ngIf="loginUserName.invalid && (loginUserName.dirty || loginUserName.touched)"
+               class="alert alert-danger">
+            <div *ngIf="loginUserName.errors?.['required']">
+              Name is required.
+            </div>
+          </div>
+        </div>
+        <label for="password">Password: </label>
+        <input id="loginPassword" type="password" class="form-control form-control-lg" required formControlName="password">
+        <div *ngIf="loginPassword.invalid && (loginPassword.dirty || loginPassword.touched)"
+             class="alert alert-danger">
+          <div *ngIf="loginPassword.errors?.['required']">
+            Password is required.
+          </div>
+        </div>
+
+        <div class="text-center mt-4 pt-2">
+          <button type="submit" class="btn btn-lg" [disabled]="!loginForm.valid">Link Account</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</div>

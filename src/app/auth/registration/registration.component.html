@@ -1,0 +1,137 @@
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()" >
+  <div class="row">
+    <div *ngIf="registerFailed"
+         class="alert alert-danger">
+      Username existed!
+    </div>
+    <div class="col mx-auto3">
+      <div class="form-outline mb-4">
+        <label for="user-name">User Name: </label>
+        <input id="user-name" type="text" class="form-control form-control-lg" pattern="[a-zA-Z][0-9a-zA-Z]*" formControlName="userName">
+        <div *ngIf="userName.invalid && (userName.dirty || userName.touched)"
+             class="alert alert-danger">
+
+          <div *ngIf="userName.errors?.['required']">
+            Name is required.
+          </div>
+          <div *ngIf="userName.errors?.['pattern'] && isNumber(userName.value[0]) " >
+            Cant not start with number.
+          </div>
+          <div *ngIf="userName.errors?.['pattern'] && !isNumber(userName.value[0])" >
+            Can only be letters and numbers
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="col mx-auto3 px-5">
+      <div class="form-outline mb-4">
+        <label for="password">Password: </label>
+        <input id="password" type="password" class="form-control form-control-lg" required formControlName="password">
+        <div *ngIf="password.invalid && (password.dirty || password.touched)"
+             class="alert alert-danger">
+          <div *ngIf="password.errors?.['required']">
+            Password is required.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col mx-auto3">
+      <div class="form-outline mb-4">
+        <label for="display-name">Display Name: </label>
+        <input id="display-name" type="text" class="form-control form-control-lg" required formControlName="displayName">
+        <div *ngIf="displayName.invalid && (displayName.dirty || displayName.touched)"
+             class="alert alert-danger">
+          <div *ngIf="displayName.errors?.['required']">
+            display name is required.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col ">
+      <div class="form-outline mb-4">
+        <label for="password-confirm">Password Confirm: </label>
+        <input id="password-confirm" type="password" class="form-control form-control-lg" required formControlName="passwordConfirm">
+        <div *ngIf="passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched)"
+             class="alert alert-danger">
+          <div *ngIf="passwordConfirm.errors?.['required']">
+            display name is required.
+          </div>
+        </div>
+        <div *ngIf="(passwordConfirm.dirty || passwordConfirm.touched) && (password.dirty || password.touched) && registerForm.errors?.['differentPassword']" class="cross-validation-error-message alert alert-danger">
+          Password not same
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col mx-auto3">
+      <div class="form-outline mb-4">
+        <label for="email">Email address: </label>
+        <input id="email" type="email" class="form-control form-control-lg" required ngModel email formControlName="email">
+        <div *ngIf="email.invalid && (email.dirty || email.touched)"
+             class="alert alert-danger">
+          <div *ngIf="email.errors?.['required']">
+            Email is required.
+          </div>
+          <div *ngIf="email.errors?.['email']">
+            Email should include @.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-outline mb-4">
+        <label for="phone-number">Phone Number: </label>
+        <input id="phone-number" type="tel" class="form-control form-control-lg" required pattern='\d{3}-\d{3}-\d{4}' formControlName="phoneNumber">
+        <div *ngIf="phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)"
+             class="alert alert-danger">
+          <div *ngIf="phoneNumber.errors?.['required']">
+            Phone number is required.
+          </div>
+          <div *ngIf="phoneNumber.errors?.['pattern']">
+            Expect proper format of 123-123-1234
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col mx-auto3 ">
+      <div class="form-outline mb-4">
+        <label for="date-of-birth">Date of Birth: </label>
+        <input id="date-of-birth" type="date" class="form-control form-control-lg" formControlName="dateOfBirth">
+        <div *ngIf="dateOfBirth.invalid && (dateOfBirth.dirty || dateOfBirth.touched)"
+             class="alert alert-danger">
+          <div *ngIf="dateOfBirth.errors?.['required']">
+            Date of Birth is required.
+          </div>
+          <div *ngIf="dateOfBirth.errors?.['forbiddenAge']">
+            Age must be over 18
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-outline mb-4">
+        <label for="zip-code">Zip code: </label>
+        <input id="zip-code" type="text" class="form-control form-control-lg" required pattern='[0-9]{5}' formControlName="zipcode">
+        <div *ngIf="zipcode.invalid && (zipcode.dirty || zipcode.touched)"
+             class="alert alert-danger">
+          <div *ngIf="zipcode.errors?.['required']">
+            Zipcode is required.
+          </div>
+          <div *ngIf="zipcode.errors?.['pattern']">
+            Expect 5 digit number
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="text-center text-lg-start mt-4 px-5">
+    <button type="submit" class="btn btn-primary btn-lg"  [disabled]="!registerForm.valid" >Register</button>
+  </div>
+</form>

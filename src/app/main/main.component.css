@@ -1,0 +1,31 @@
+img {
+  width: 50%;
+  max-height: 300px;
+}
+
+.profile, .followers, .newPost{
+  text-align: center;
+  vertical-align: middle;
+  background-color: silver;
+}
+
+.newPost{
+  background: aliceblue;
+}
+.profile input {
+  width: 100%
+}
+
+.follower {
+  background: aliceblue;
+}
+
+.input-group {
+  background: aliceblue;
+}
+
+
+
+.btn {
+  background: bisque;
+}

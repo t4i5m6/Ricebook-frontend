@@ -1,0 +1,24 @@
+.btn {
+  background: bisque;
+}
+
+.profile {
+  text-align: center;
+  vertical-align: middle;
+  background: silver;
+  max-width: 400px;
+}
+
+img {
+  width: 70%;
+  max-height: 300px;
+}
+
+form {
+  background: aliceblue;
+  max-width: 400px;
+}
+
+.login {
+  border-radius: 30px;
+}
